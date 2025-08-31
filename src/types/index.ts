@@ -12,9 +12,11 @@ export interface BaseItem {
 export interface Experience extends BaseItem {
   company: string;
   position: string;
-  location?: string;
+  location: string;
+  type: 'full-time' | 'part-time' | 'internship' | 'freelance';
   startDate: string;
   endDate?: string; // null for current position
+  current: boolean;
   responsibilities: string[];
   achievements: string[];
   technologies: string[];
@@ -25,8 +27,9 @@ export interface Project extends BaseItem {
   repository?: string;
   technologies: string[];
   status: 'completed' | 'in-progress' | 'planning';
+  type: 'academic' | 'personal';
+  year: number;
   highlights: string[];
-  duration?: string;
 }
 
 export interface Certification extends BaseItem {
