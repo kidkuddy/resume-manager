@@ -47,16 +47,18 @@ export interface Activity extends BaseItem {
   role?: string;
   startDate: string;
   endDate?: string;
+  current: boolean;
   location?: string;
   type: 'volunteering' | 'speaking' | 'mentoring' | 'community' | 'other';
+  impact: string[]; // Impact and outcomes
+  skills: string[]; // Skills developed
 }
 
 export interface Skill extends BaseItem {
-  category: 'programming' | 'framework' | 'database' | 'tools' | 'cloud' | 'soft-skills' | 'languages' | 'other';
+  name: string;
+  category: 'technical' | 'soft' | 'leadership' | 'business' | 'language' | 'creative' | 'other';
   proficiency: 'experimented' | 'familiar' | 'proficient' | 'expert'; // experimented=prototyping, familiar=heard/read, proficient=worked with, expert=built many things
-  firstUsed?: string; // Year or date when first used
-  lastUsed?: string; // Year or date when last used
-  context?: string[]; // Projects or contexts where used
+  projects: string[]; // Related projects where this skill was used
 }
 
 export interface Education extends BaseItem {

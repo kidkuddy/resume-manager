@@ -1,4 +1,4 @@
-import { ResumeData, ItemType, AllItems } from '@/types';
+import { ResumeData, ItemType, AllItems, Education, Skill, Activity } from '@/types';
 
 // Updated DataManager to use filesystem via API routes
 class DataManager {
@@ -254,6 +254,57 @@ class DataManager {
 
   exportDataSync(): string {
     return JSON.stringify(this.data, null, 2);
+  }
+
+  // Convenience methods for education
+  async getAllEducation() {
+    return this.getAllItems<Education>('education');
+  }
+
+  async addEducation(education: Omit<Education, 'id' | 'createdAt' | 'updatedAt'>) {
+    return this.createItem<Education>('education', education);
+  }
+
+  async updateEducation(id: string, updates: Partial<Omit<Education, 'id' | 'createdAt'>>) {
+    return this.updateItem<Education>('education', id, updates);
+  }
+
+  async deleteEducation(id: string) {
+    return this.deleteItem('education', id);
+  }
+
+  // Convenience methods for skills
+  async getAllSkills() {
+    return this.getAllItems<Skill>('skills');
+  }
+
+  async addSkill(skill: Omit<Skill, 'id' | 'createdAt' | 'updatedAt'>) {
+    return this.createItem<Skill>('skills', skill);
+  }
+
+  async updateSkill(id: string, updates: Partial<Omit<Skill, 'id' | 'createdAt'>>) {
+    return this.updateItem<Skill>('skills', id, updates);
+  }
+
+  async deleteSkill(id: string) {
+    return this.deleteItem('skills', id);
+  }
+
+  // Convenience methods for activities
+  async getAllActivities() {
+    return this.getAllItems<Activity>('activities');
+  }
+
+  async addActivity(activity: Omit<Activity, 'id' | 'createdAt' | 'updatedAt'>) {
+    return this.createItem<Activity>('activities', activity);
+  }
+
+  async updateActivity(id: string, updates: Partial<Omit<Activity, 'id' | 'createdAt'>>) {
+    return this.updateItem<Activity>('activities', id, updates);
+  }
+
+  async deleteActivity(id: string) {
+    return this.deleteItem('activities', id);
   }
 }
 

@@ -26,11 +26,13 @@ import {
   FileCode,
   Search,
   Download,
-  Upload
+  Upload,
+  Home
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
 const navigationItems = [
+  { title: "Home", icon: Home, path: "/" },
   { title: "Experiences", icon: FileText, path: "/experiences" },
   { title: "Projects", icon: FolderOpen, path: "/projects" },
   { title: "Certifications", icon: Award, path: "/certifications" },

@@ -75,8 +75,61 @@
       "updatedAt": "2025-09-01T16:57:40.934Z"
     }
   ],
-  "activities": [],
-  "skills": [],
-  "education": [],
+  "activities": [
+    {
+      "title": "AAA",
+      "description": "",
+      "organization": "Dar Blockchain INSAT",
+      "role": "",
+      "location": "Tunisia",
+      "type": "mentoring",
+      "startDate": "2025-02",
+      "endDate": "",
+      "current": true,
+      "impact": [],
+      "skills": [],
+      "tags": [],
+      "id": "mf1fenyiz8j23cmspo8",
+      "createdAt": "2025-09-01T18:01:29.801Z",
+      "updatedAt": "2025-09-01T18:01:29.801Z"
+    }
+  ],
+  "skills": [
+    {
+      "title": "React",
+      "name": "React",
+      "category": "technical",
+      "proficiency": "expert",
+      "description": "",
+      "yearsOfExperience": 0,
+      "projects": [],
+      "tags": [],
+      "id": "mf1e34ok6csgrc4zpmu",
+      "createdAt": "2025-09-01T17:24:31.988Z",
+      "updatedAt": "2025-09-01T17:24:31.988Z"
+    }
+  ],
+  "education": [
+    {
+      "title": "SSSS",
+      "description": "dasdas",
+      "institution": "INSAT",
+      "degree": "engineering",
+      "field": "ICT",
+      "location": "Tunisia",
+      "startDate": "2020-02",
+      "endDate": "",
+      "status": "completed",
+      "coursework": [
+        "Software engineering"
+      ],
+      "tags": [
+        "www"
+      ],
+      "id": "mf1e1kutys5p067bm7n",
+      "createdAt": "2025-09-01T17:23:19.637Z",
+      "updatedAt": "2025-09-01T17:23:36.405Z"
+    }
+  ],
   "templates": []
 }

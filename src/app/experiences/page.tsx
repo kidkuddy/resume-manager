@@ -5,13 +5,15 @@ import { DashboardLayout } from "@/components/dashboard-layout";
 import { ExperienceList } from "@/components/data-display/experience-list";
 import { ExperienceForm } from "@/components/forms/experience-form";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { ExperienceListSkeleton } from "@/components/ui/loading-skeletons";
-import { Plus, LayoutGrid, List } from "lucide-react";
+import { Plus, LayoutGrid, List, Clock } from "lucide-react";
 import { Experience } from "@/types";
 import dataManager from "@/lib/data-manager";
+import { calculateTotalExperience } from "@/lib/date-utils";
 
 export default function ExperiencesPage() {
   const [experiences, setExperiences] = useState<Experience[]>([]);
@@ -23,6 +25,7 @@ export default function ExperiencesPage() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingExperience, setEditingExperience] = useState<Experience | undefined>();
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
 
   // Load data on mount
   useEffect(() => {
@@ -42,9 +45,15 @@ export default function ExperiencesPage() {
         selectedTags.some(tag => experience.tags.includes(tag))
       );
     }
+
+    if (selectedTypes.length > 0) {
+      filtered = filtered.filter(experience => 
+        selectedTypes.includes(experience.type)
+      );
+    }
     
     setFilteredExperiences(filtered);
-  }, [experiences, searchQuery, selectedTags]);
+  }, [experiences, searchQuery, selectedTags, selectedTypes]);
 
   const loadExperiences = async () => {
     setIsLoading(true);
@@ -101,6 +110,39 @@ export default function ExperiencesPage() {
   const handleTagRemove = (tag: string) => {
     setSelectedTags(prev => prev.filter(t => t !== tag));
   };
+
+  // Experience type counters
+  const getExperienceCount = (type?: string) => {
+    if (!type) return filteredExperiences.length;
+    return experiences.filter(exp => exp.type === type).length;
+  };
+
+  const getExperienceDuration = (type?: string) => {
+    const relevantExperiences = type 
+      ? experiences.filter(exp => exp.type === type)
+      : experiences;
+    
+    return calculateTotalExperience(relevantExperiences.map(exp => ({
+      startDate: exp.startDate,
+      endDate: exp.endDate,
+      current: exp.current
+    })));
+  };
+
+  const toggleTypeFilter = (type: string) => {
+    setSelectedTypes(prev => 
+      prev.includes(type) 
+        ? prev.filter(t => t !== type)
+        : [...prev, type]
+    );
+  };
+
+  const experienceTypes = [
+    { key: 'full-time', label: 'Full Time', color: 'bg-blue-500' },
+    { key: 'part-time', label: 'Part Time', color: 'bg-green-500' },
+    { key: 'internship', label: 'Internships', color: 'bg-purple-500' },
+    { key: 'freelance', label: 'Freelance', color: 'bg-orange-500' },
+  ];
 
   const handleExport = async () => {
     const data = await dataManager.exportData();
@@ -191,6 +233,46 @@ export default function ExperiencesPage() {
               Add Experience
             </Button>
           </div>
+        </div>
+
+        {/* Experience Stats Cards */}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+          {/* Total Experience Card */}
+          <Card className="md:col-span-1">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Total Experience</p>
+                  <p className="text-2xl font-bold">{getExperienceDuration()}</p>
+                </div>
+                <Clock className="w-5 h-5 text-muted-foreground" />
+              </div>
+            </CardContent>
+          </Card>
+
+          {experienceTypes.map((type) => (
+            <Card 
+              key={type.key} 
+              className={`cursor-pointer transition-all hover:shadow-md ${
+                selectedTypes.includes(type.key) ? 'ring-2 ring-primary' : ''
+              }`}
+              onClick={() => toggleTypeFilter(type.key)}
+            >
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">{type.label}</p>
+                    <p className="text-2xl font-bold">{getExperienceCount(type.key)}</p>
+                  </div>
+                  <div className={`w-3 h-3 rounded-full ${type.color}`} />
+                </div>
+                <div className="flex items-center gap-1">
+                  <Clock className="w-3 h-3 text-muted-foreground" />
+                  <p className="text-sm text-muted-foreground">{getExperienceDuration(type.key)}</p>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
 
         {/* Experience List */}

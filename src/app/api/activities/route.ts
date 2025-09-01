@@ -1,0 +1,55 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { dataManager } from '@/lib/data-manager';
+import { z } from 'zod';
+
+const ActivitySchema = z.object({
+  title: z.string().min(1),
+  organization: z.string().min(1),
+  type: z.enum(['volunteering', 'speaking', 'mentoring', 'community', 'other']),
+  role: z.string().optional(),
+  startDate: z.string(),
+  endDate: z.string().optional(),
+  current: z.boolean().default(false),
+  location: z.string().optional(),
+  website: z.string().optional(),
+  description: z.string().optional(),
+  impact: z.array(z.string()).default([]),
+  skills: z.array(z.string()).default([]),
+  tags: z.array(z.string()).default([]),
+});
+
+export async function GET() {
+  try {
+    const activities = await dataManager.getAllActivities();
+    return NextResponse.json(activities);
+  } catch (error) {
+    console.error('Failed to fetch activities:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch activities' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const validatedData = ActivitySchema.parse(body);
+    
+    const activity = await dataManager.addActivity(validatedData);
+    return NextResponse.json(activity, { status: 201 });
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { error: 'Invalid activity data', details: error.issues },
+        { status: 400 }
+      );
+    }
+    
+    console.error('Failed to create activity:', error);
+    return NextResponse.json(
+      { error: 'Failed to create activity' },
+      { status: 500 }
+    );
+  }
+}

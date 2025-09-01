@@ -73,19 +73,43 @@ export const EDUCATION_STATUS = [
 
 // Skills constants
 export const SKILL_CATEGORIES = [
-  { value: "programming", label: "Programming Languages" },
-  { value: "framework", label: "Frameworks & Libraries" },
-  { value: "database", label: "Databases" },
-  { value: "tools", label: "Tools & Software" },
-  { value: "cloud", label: "Cloud & DevOps" },
-  { value: "soft-skills", label: "Soft Skills" },
-  { value: "languages", label: "Languages" },
+  { value: "technical", label: "Technical Skills" },
+  { value: "soft", label: "Soft Skills" },
+  { value: "leadership", label: "Leadership & Management" },
+  { value: "business", label: "Business & Strategy" },
+  { value: "language", label: "Languages" },
+  { value: "creative", label: "Creative & Design" },
   { value: "other", label: "Other" },
 ] as const;
 
 export const SKILL_PROFICIENCY = [
-  { value: "experimented", label: "Experimented (Prototyping)" },
-  { value: "familiar", label: "Familiar (Heard/Read About)" },
-  { value: "proficient", label: "Proficient (Worked With)" },
-  { value: "expert", label: "Expert (Built Many Things)" },
+  { 
+    value: "experimented", 
+    label: "Experimented", 
+    description: "Just starting to learn or prototype with this skill" 
+  },
+  { 
+    value: "familiar", 
+    label: "Familiar", 
+    description: "Have read about it or used it in tutorials" 
+  },
+  { 
+    value: "proficient", 
+    label: "Proficient", 
+    description: "Have worked with it on real projects" 
+  },
+  { 
+    value: "expert", 
+    label: "Expert", 
+    description: "Have mastered it and built many things with it" 
+  },
+] as const;
+
+// Activity constants
+export const ACTIVITY_TYPES = [
+  { value: "volunteering", label: "Volunteering" },
+  { value: "speaking", label: "Speaking & Presentations" },
+  { value: "mentoring", label: "Mentoring & Coaching" },
+  { value: "community", label: "Community Involvement" },
+  { value: "other", label: "Other Activities" },
 ] as const;
