@@ -37,7 +37,9 @@ export interface Certification extends BaseItem {
   issueDate: string;
   expirationDate?: string;
   credentialId?: string;
-  url?: string;
+  credentialUrl?: string;
+  status: 'active' | 'expired' | 'pending';
+  worthiness: 'premium' | 'earned' | 'free' | 'basic'; // premium=paid, earned=studied but free exam, free=online course, basic=participation
 }
 
 export interface Activity extends BaseItem {
@@ -50,21 +52,22 @@ export interface Activity extends BaseItem {
 }
 
 export interface Skill extends BaseItem {
-  category: string;
-  level: 'beginner' | 'intermediate' | 'advanced' | 'expert';
-  years?: number;
-  endorsements?: number;
+  category: 'programming' | 'framework' | 'database' | 'tools' | 'cloud' | 'soft-skills' | 'languages' | 'other';
+  proficiency: 'experimented' | 'familiar' | 'proficient' | 'expert'; // experimented=prototyping, familiar=heard/read, proficient=worked with, expert=built many things
+  firstUsed?: string; // Year or date when first used
+  lastUsed?: string; // Year or date when last used
+  context?: string[]; // Projects or contexts where used
 }
 
 export interface Education extends BaseItem {
   institution: string;
-  degree: string;
+  degree: 'bachelor' | 'master' | 'phd' | 'engineering' | 'associate' | 'diploma' | 'certificate' | 'other';
   field: string;
+  location: string;
   startDate: string;
   endDate?: string;
-  gpa?: string;
-  achievements: string[];
-  coursework?: string[];
+  status: 'completed' | 'in-progress' | 'pending'; // pending = planning to enroll
+  coursework: string[]; // coursework highlights
 }
 
 export interface LaTeXTemplate {

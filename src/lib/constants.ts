@@ -38,3 +38,54 @@ export const COMMON_TECHNOLOGIES = [
   // Tools
   "Git", "Figma", "Adobe Creative Suite", "Postman", "Jira", "Slack",
 ] as const;
+
+// Certification constants
+export const CERTIFICATION_STATUS = [
+  { value: "active", label: "Active" },
+  { value: "expired", label: "Expired" },
+  { value: "pending", label: "Pending" },
+] as const;
+
+export const CERTIFICATION_WORTHINESS = [
+  { value: "premium", label: "Premium (Paid Certification)" },
+  { value: "earned", label: "Earned (Free Exam, Studied)" },
+  { value: "free", label: "Free (Online Course)" },
+  { value: "basic", label: "Basic (Participation)" },
+] as const;
+
+// Education constants
+export const DEGREE_TYPES = [
+  { value: "bachelor", label: "Bachelor's Degree" },
+  { value: "master", label: "Master's Degree" },
+  { value: "phd", label: "PhD" },
+  { value: "engineering", label: "Engineering Degree" },
+  { value: "associate", label: "Associate Degree" },
+  { value: "diploma", label: "Diploma" },
+  { value: "certificate", label: "Certificate" },
+  { value: "other", label: "Other" },
+] as const;
+
+export const EDUCATION_STATUS = [
+  { value: "completed", label: "Completed" },
+  { value: "in-progress", label: "In Progress" },
+  { value: "pending", label: "Pending (Planning to Enroll)" },
+] as const;
+
+// Skills constants
+export const SKILL_CATEGORIES = [
+  { value: "programming", label: "Programming Languages" },
+  { value: "framework", label: "Frameworks & Libraries" },
+  { value: "database", label: "Databases" },
+  { value: "tools", label: "Tools & Software" },
+  { value: "cloud", label: "Cloud & DevOps" },
+  { value: "soft-skills", label: "Soft Skills" },
+  { value: "languages", label: "Languages" },
+  { value: "other", label: "Other" },
+] as const;
+
+export const SKILL_PROFICIENCY = [
+  { value: "experimented", label: "Experimented (Prototyping)" },
+  { value: "familiar", label: "Familiar (Heard/Read About)" },
+  { value: "proficient", label: "Proficient (Worked With)" },
+  { value: "expert", label: "Expert (Built Many Things)" },
+] as const;

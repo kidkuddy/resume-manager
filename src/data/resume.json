@@ -56,7 +56,25 @@
       "updatedAt": "2025-09-01T16:29:04.335Z"
     }
   ],
-  "certifications": [],
+  "certifications": [
+    {
+      "title": "CKA",
+      "description": "",
+      "issuer": "Linux Foundation",
+      "issueDate": "2025-10",
+      "expirationDate": "2025-10",
+      "credentialId": "sss",
+      "credentialUrl": "",
+      "status": "pending",
+      "worthiness": "earned",
+      "tags": [
+        "kubernetes"
+      ],
+      "id": "mf1d4ll2vay62iml2q",
+      "createdAt": "2025-09-01T16:57:40.934Z",
+      "updatedAt": "2025-09-01T16:57:40.934Z"
+    }
+  ],
   "activities": [],
   "skills": [],
   "education": [],
