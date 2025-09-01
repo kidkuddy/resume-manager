@@ -180,7 +180,7 @@ class DataManager {
     return JSON.stringify(this.data, null, 2);
   }
 
-  async importData(jsonData: string): Promise<boolean> {
+  async importData(jsonData: string, mode: 'override' | 'merge' = 'override'): Promise<boolean> {
     try {
       const parsed = JSON.parse(jsonData) as ResumeData;
       
@@ -193,13 +193,138 @@ class DataManager {
           Array.isArray(parsed.skills) &&
           Array.isArray(parsed.education) &&
           Array.isArray(parsed.templates)) {
-        this.data = parsed;
+        
+        await this.initializeData();
+        
+        if (mode === 'override') {
+          // Replace all data
+          this.data = parsed;
+        } else {
+          // Merge data
+          this.data = this.mergeResumeData(this.data, parsed);
+        }
+        
         await this.saveData();
         return true;
       }
       return false;
     } catch {
       return false;
+    }
+  }
+
+  private mergeResumeData(existing: ResumeData, incoming: ResumeData): ResumeData {
+    const merged: ResumeData = {
+      experiences: [...existing.experiences],
+      projects: [...existing.projects],
+      certifications: [...existing.certifications],
+      activities: [...existing.activities],
+      skills: [...existing.skills],
+      education: [...existing.education],
+      templates: [...existing.templates]
+    };
+
+    // Helper function to merge arrays by ID, avoiding duplicates
+    const mergeArrays = <T extends AllItems>(existingArray: T[], incomingArray: T[]): T[] => {
+      const existingIds = new Set(existingArray.map(item => item.id));
+      const uniqueIncoming = incomingArray.filter(item => !existingIds.has(item.id));
+      return [...existingArray, ...uniqueIncoming];
+    };
+
+    // Merge each section
+    merged.experiences = mergeArrays(merged.experiences, incoming.experiences);
+    merged.projects = mergeArrays(merged.projects, incoming.projects);
+    merged.certifications = mergeArrays(merged.certifications, incoming.certifications);
+    merged.activities = mergeArrays(merged.activities, incoming.activities);
+    merged.skills = mergeArrays(merged.skills, incoming.skills);
+    merged.education = mergeArrays(merged.education, incoming.education);
+    merged.templates = mergeArrays(merged.templates, incoming.templates);
+
+    return merged;
+  }
+
+  async getImportPreview(jsonData: string): Promise<{
+    isValid: boolean;
+    summary?: {
+      experiences: number;
+      projects: number;
+      certifications: number;
+      activities: number;
+      skills: number;
+      education: number;
+      templates: number;
+    };
+    conflicts?: {
+      type: ItemType;
+      existing: string;
+      incoming: string;
+    }[];
+  }> {
+    try {
+      const parsed = JSON.parse(jsonData) as ResumeData;
+      
+      // Validate structure
+      if (typeof parsed !== 'object' || 
+          !Array.isArray(parsed.experiences) ||
+          !Array.isArray(parsed.projects) ||
+          !Array.isArray(parsed.certifications) ||
+          !Array.isArray(parsed.activities) ||
+          !Array.isArray(parsed.skills) ||
+          !Array.isArray(parsed.education) ||
+          !Array.isArray(parsed.templates)) {
+        return { isValid: false };
+      }
+
+      await this.initializeData();
+      
+      // Generate summary
+      const summary = {
+        experiences: parsed.experiences.length,
+        projects: parsed.projects.length,
+        certifications: parsed.certifications.length,
+        activities: parsed.activities.length,
+        skills: parsed.skills.length,
+        education: parsed.education.length,
+        templates: parsed.templates.length,
+      };
+
+      // Check for ID conflicts
+      const conflicts: { type: ItemType; existing: string; incoming: string }[] = [];
+      
+      const checkConflicts = (type: ItemType, existingItems: AllItems[], incomingItems: AllItems[]) => {
+        const existingIds = new Set(existingItems.map(item => item.id));
+        incomingItems.forEach(item => {
+          if (existingIds.has(item.id)) {
+            const existing = existingItems.find(e => e.id === item.id);
+            const getItemName = (item: AllItems): string => {
+              if ('title' in item && item.title) return item.title;
+              if ('name' in item && item.name) return item.name;
+              return `${type} item`;
+            };
+            conflicts.push({
+              type,
+              existing: existing ? getItemName(existing) : `${type} item`,
+              incoming: getItemName(item)
+            });
+          }
+        });
+      };
+
+      checkConflicts('experiences', this.data.experiences, parsed.experiences);
+      checkConflicts('projects', this.data.projects, parsed.projects);
+      checkConflicts('certifications', this.data.certifications, parsed.certifications);
+      checkConflicts('activities', this.data.activities, parsed.activities);
+      checkConflicts('skills', this.data.skills, parsed.skills);
+      checkConflicts('education', this.data.education, parsed.education);
+      checkConflicts('templates', this.data.templates, parsed.templates);
+
+      return {
+        isValid: true,
+        summary,
+        conflicts
+      };
+    } catch {
+      return { isValid: false };
     }
   }
 

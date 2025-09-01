@@ -1,0 +1,41 @@
+{
+  "experiences": [
+    {
+      "title": "Sample Experience",
+      "description": "Test import functionality",
+      "company": "Test Company",
+      "position": "Senior Developer",
+      "location": "Remote",
+      "type": "full-time",
+      "startDate": "Jan 2024",
+      "endDate": "Dec 2024",
+      "current": false,
+      "responsibilities": [
+        "Lead development team",
+        "Implement new features"
+      ],
+      "achievements": [
+        "Increased performance by 30%",
+        "Reduced bugs by 50%"
+      ],
+      "technologies": [
+        "React",
+        "TypeScript",
+        "Node.js"
+      ],
+      "tags": [
+        "frontend",
+        "fullstack"
+      ],
+      "id": "sample-experience-1",
+      "createdAt": "2025-09-01T18:00:00.000Z",
+      "updatedAt": "2025-09-01T18:00:00.000Z"
+    }
+  ],
+  "projects": [],
+  "certifications": [],
+  "activities": [],
+  "skills": [],
+  "education": [],
+  "templates": []
+}

@@ -144,47 +144,6 @@ export default function ExperiencesPage() {
     { key: 'freelance', label: 'Freelance', color: 'bg-orange-500' },
   ];
 
-  const handleExport = async () => {
-    const data = await dataManager.exportData();
-    const blob = new Blob([data], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `resume-data-${new Date().toISOString().split('T')[0]}.json`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  };
-
-  const handleImport = () => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.json';
-    input.onchange = async (e) => {
-      const file = (e.target as HTMLInputElement).files?.[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = async (e) => {
-          try {
-            const data = e.target?.result as string;
-            const success = await dataManager.importData(data);
-            if (success) {
-              alert('Data imported successfully!');
-              loadExperiences();
-            } else {
-              alert('Failed to import data. Please check the file format.');
-            }
-          } catch (error) {
-            alert('Error reading file. Please try again.');
-          }
-        };
-        reader.readAsText(file);
-      }
-    };
-    input.click();
-  };
-
   return (
     <DashboardLayout
       title="Experiences"
@@ -194,8 +153,7 @@ export default function ExperiencesPage() {
       onTagSelect={handleTagSelect}
       onTagRemove={handleTagRemove}
       availableTags={availableTags}
-      onExport={handleExport}
-      onImport={handleImport}
+      onDataChange={loadExperiences}
     >
       <div className="space-y-6">
         {/* Header */}

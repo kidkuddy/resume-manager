@@ -107,6 +107,406 @@
       "id": "mf1e34ok6csgrc4zpmu",
       "createdAt": "2025-09-01T17:24:31.988Z",
       "updatedAt": "2025-09-01T17:24:31.988Z"
+    },
+    {
+      "title": "React",
+      "name": "React",
+      "category": "technical",
+      "proficiency": "expert",
+      "description": "Advanced React development with hooks, context, and performance optimization",
+      "projects": [
+        "E-commerce Platform",
+        "Portfolio Website",
+        "Dashboard App"
+      ],
+      "tags": [
+        "frontend",
+        "javascript",
+        "ui"
+      ],
+      "id": "skill-react-001",
+      "createdAt": "2025-09-01T18:00:00.000Z",
+      "updatedAt": "2025-09-01T18:00:00.000Z"
+    },
+    {
+      "title": "TypeScript",
+      "name": "TypeScript",
+      "category": "technical",
+      "proficiency": "expert",
+      "description": "Type-safe JavaScript development with advanced type system knowledge",
+      "projects": [
+        "Enterprise CRM",
+        "API Gateway",
+        "Mobile App Backend"
+      ],
+      "tags": [
+        "frontend",
+        "backend",
+        "type-safety"
+      ],
+      "id": "skill-typescript-002",
+      "createdAt": "2025-09-01T18:00:00.000Z",
+      "updatedAt": "2025-09-01T18:00:00.000Z"
+    },
+    {
+      "title": "Node.js",
+      "name": "Node.js",
+      "category": "technical",
+      "proficiency": "proficient",
+      "description": "Server-side JavaScript development with Express, NestJS, and microservices",
+      "projects": [
+        "REST API",
+        "GraphQL Server",
+        "Real-time Chat"
+      ],
+      "tags": [
+        "backend",
+        "javascript",
+        "api"
+      ],
+      "id": "skill-nodejs-003",
+      "createdAt": "2025-09-01T18:00:00.000Z",
+      "updatedAt": "2025-09-01T18:00:00.000Z"
+    },
+    {
+      "title": "Python",
+      "name": "Python",
+      "category": "technical",
+      "proficiency": "proficient",
+      "description": "Backend development, data analysis, and automation scripting",
+      "projects": [
+        "Data Pipeline",
+        "ML Model",
+        "Automation Scripts"
+      ],
+      "tags": [
+        "backend",
+        "data-science",
+        "automation"
+      ],
+      "id": "skill-python-004",
+      "createdAt": "2025-09-01T18:00:00.000Z",
+      "updatedAt": "2025-09-01T18:00:00.000Z"
+    },
+    {
+      "title": "PostgreSQL",
+      "name": "PostgreSQL",
+      "category": "technical",
+      "proficiency": "proficient",
+      "description": "Advanced SQL queries, database design, and performance optimization",
+      "projects": [
+        "User Management System",
+        "Analytics Platform",
+        "Inventory System"
+      ],
+      "tags": [
+        "database",
+        "sql",
+        "backend"
+      ],
+      "id": "skill-postgresql-005",
+      "createdAt": "2025-09-01T18:00:00.000Z",
+      "updatedAt": "2025-09-01T18:00:00.000Z"
+    },
+    {
+      "title": "Docker",
+      "name": "Docker",
+      "category": "technical",
+      "proficiency": "proficient",
+      "description": "Containerization, multi-stage builds, and deployment orchestration",
+      "projects": [
+        "Microservices Architecture",
+        "CI/CD Pipeline",
+        "Development Environment"
+      ],
+      "tags": [
+        "devops",
+        "containerization",
+        "deployment"
+      ],
+      "id": "skill-docker-006",
+      "createdAt": "2025-09-01T18:00:00.000Z",
+      "updatedAt": "2025-09-01T18:00:00.000Z"
+    },
+    {
+      "title": "AWS",
+      "name": "AWS",
+      "category": "technical",
+      "proficiency": "familiar",
+      "description": "Cloud infrastructure, serverless functions, and managed services",
+      "projects": [
+        "Serverless API",
+        "Static Website Hosting",
+        "Database Migration"
+      ],
+      "tags": [
+        "cloud",
+        "infrastructure",
+        "serverless"
+      ],
+      "id": "skill-aws-007",
+      "createdAt": "2025-09-01T18:00:00.000Z",
+      "updatedAt": "2025-09-01T18:00:00.000Z"
+    },
+    {
+      "title": "Git & GitHub",
+      "name": "Git & GitHub",
+      "category": "technical",
+      "proficiency": "expert",
+      "description": "Version control, branching strategies, and collaborative development",
+      "projects": [
+        "All Development Projects",
+        "Open Source Contributions",
+        "Team Workflows"
+      ],
+      "tags": [
+        "version-control",
+        "collaboration",
+        "workflow"
+      ],
+      "id": "skill-git-008",
+      "createdAt": "2025-09-01T18:00:00.000Z",
+      "updatedAt": "2025-09-01T18:00:00.000Z"
+    },
+    {
+      "title": "Team Leadership",
+      "name": "Team Leadership",
+      "category": "leadership",
+      "proficiency": "proficient",
+      "description": "Leading development teams, mentoring junior developers, and project coordination",
+      "projects": [
+        "Frontend Team Lead",
+        "Mentorship Program",
+        "Sprint Planning"
+      ],
+      "tags": [
+        "management",
+        "mentoring",
+        "coordination"
+      ],
+      "id": "skill-leadership-009",
+      "createdAt": "2025-09-01T18:00:00.000Z",
+      "updatedAt": "2025-09-01T18:00:00.000Z"
+    },
+    {
+      "title": "Agile/Scrum",
+      "name": "Agile/Scrum",
+      "category": "business",
+      "proficiency": "proficient",
+      "description": "Agile methodologies, sprint planning, and continuous improvement",
+      "projects": [
+        "Sprint Management",
+        "Backlog Grooming",
+        "Retrospectives"
+      ],
+      "tags": [
+        "methodology",
+        "planning",
+        "teamwork"
+      ],
+      "id": "skill-agile-010",
+      "createdAt": "2025-09-01T18:00:00.000Z",
+      "updatedAt": "2025-09-01T18:00:00.000Z"
+    },
+    {
+      "title": "Problem Solving",
+      "name": "Problem Solving",
+      "category": "soft",
+      "proficiency": "expert",
+      "description": "Analytical thinking, debugging complex issues, and creative solution finding",
+      "projects": [
+        "Performance Optimization",
+        "Bug Investigation",
+        "Architecture Design"
+      ],
+      "tags": [
+        "analytical",
+        "debugging",
+        "creativity"
+      ],
+      "id": "skill-problem-solving-011",
+      "createdAt": "2025-09-01T18:00:00.000Z",
+      "updatedAt": "2025-09-01T18:00:00.000Z"
+    },
+    {
+      "title": "Communication",
+      "name": "Communication",
+      "category": "soft",
+      "proficiency": "proficient",
+      "description": "Technical documentation, stakeholder presentations, and cross-team collaboration",
+      "projects": [
+        "Technical Documentation",
+        "Client Presentations",
+        "Code Reviews"
+      ],
+      "tags": [
+        "documentation",
+        "presentation",
+        "collaboration"
+      ],
+      "id": "skill-communication-012",
+      "createdAt": "2025-09-01T18:00:00.000Z",
+      "updatedAt": "2025-09-01T18:00:00.000Z"
+    },
+    {
+      "title": "UI/UX Design",
+      "name": "UI/UX Design",
+      "category": "creative",
+      "proficiency": "familiar",
+      "description": "User interface design, user experience principles, and design thinking",
+      "projects": [
+        "Mobile App Design",
+        "Dashboard Redesign",
+        "User Research"
+      ],
+      "tags": [
+        "design",
+        "user-experience",
+        "prototyping"
+      ],
+      "id": "skill-uiux-013",
+      "createdAt": "2025-09-01T18:00:00.000Z",
+      "updatedAt": "2025-09-01T18:00:00.000Z"
+    },
+    {
+      "title": "French",
+      "name": "French",
+      "category": "language",
+      "proficiency": "proficient",
+      "description": "Professional working proficiency in French language",
+      "projects": [
+        "Client Communications",
+        "French Documentation",
+        "International Team"
+      ],
+      "tags": [
+        "language",
+        "international",
+        "communication"
+      ],
+      "id": "skill-french-014",
+      "createdAt": "2025-09-01T18:00:00.000Z",
+      "updatedAt": "2025-09-01T18:00:00.000Z"
+    },
+    {
+      "title": "English",
+      "name": "English",
+      "category": "language",
+      "proficiency": "expert",
+      "description": "Native-level English proficiency for technical and business communication",
+      "projects": [
+        "Technical Writing",
+        "International Presentations",
+        "Documentation"
+      ],
+      "tags": [
+        "language",
+        "technical-writing",
+        "business"
+      ],
+      "id": "skill-english-015",
+      "createdAt": "2025-09-01T18:00:00.000Z",
+      "updatedAt": "2025-09-01T18:00:00.000Z"
+    },
+    {
+      "title": "System Architecture",
+      "name": "System Architecture",
+      "category": "technical",
+      "proficiency": "familiar",
+      "description": "Designing scalable systems, microservices architecture, and infrastructure planning",
+      "projects": [
+        "E-commerce Platform",
+        "Microservices Migration",
+        "API Gateway Design"
+      ],
+      "tags": [
+        "architecture",
+        "scalability",
+        "design"
+      ],
+      "id": "skill-architecture-016",
+      "createdAt": "2025-09-01T18:00:00.000Z",
+      "updatedAt": "2025-09-01T18:00:00.000Z"
+    },
+    {
+      "title": "Machine Learning",
+      "name": "Machine Learning",
+      "category": "technical",
+      "proficiency": "experimented",
+      "description": "Basic understanding of ML algorithms, data preprocessing, and model training",
+      "projects": [
+        "Recommendation System",
+        "Data Analysis Tool",
+        "Prediction Model"
+      ],
+      "tags": [
+        "ai",
+        "data-science",
+        "algorithms"
+      ],
+      "id": "skill-ml-017",
+      "createdAt": "2025-09-01T18:00:00.000Z",
+      "updatedAt": "2025-09-01T18:00:00.000Z"
+    },
+    {
+      "title": "GraphQL",
+      "name": "GraphQL",
+      "category": "technical",
+      "proficiency": "familiar",
+      "description": "API design with GraphQL, schema definition, and query optimization",
+      "projects": [
+        "API Gateway",
+        "Frontend Data Layer",
+        "Real-time Subscriptions"
+      ],
+      "tags": [
+        "api",
+        "graphql",
+        "data"
+      ],
+      "id": "skill-graphql-018",
+      "createdAt": "2025-09-01T18:00:00.000Z",
+      "updatedAt": "2025-09-01T18:00:00.000Z"
+    },
+    {
+      "title": "MongoDB",
+      "name": "MongoDB",
+      "category": "technical",
+      "proficiency": "familiar",
+      "description": "NoSQL database design, aggregation pipelines, and document modeling",
+      "projects": [
+        "Content Management System",
+        "Analytics Platform",
+        "User Data Store"
+      ],
+      "tags": [
+        "database",
+        "nosql",
+        "backend"
+      ],
+      "id": "skill-mongodb-019",
+      "createdAt": "2025-09-01T18:00:00.000Z",
+      "updatedAt": "2025-09-01T18:00:00.000Z"
+    },
+    {
+      "title": "Time Management",
+      "name": "Time Management",
+      "category": "soft",
+      "proficiency": "proficient",
+      "description": "Prioritization, deadline management, and efficient workflow organization",
+      "projects": [
+        "Project Delivery",
+        "Sprint Planning",
+        "Personal Productivity"
+      ],
+      "tags": [
+        "productivity",
+        "planning",
+        "efficiency"
+      ],
+      "id": "skill-time-management-020",
+      "createdAt": "2025-09-01T18:00:00.000Z",
+      "updatedAt": "2025-09-01T18:00:00.000Z"
     }
   ],
   "education": [

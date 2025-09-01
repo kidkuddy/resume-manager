@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { ImportExportComponent } from "@/components/import-export";
 import { 
   FileText, 
   FolderOpen, 
@@ -51,8 +52,7 @@ interface DashboardLayoutProps {
   onTagSelect?: (tag: string) => void;
   onTagRemove?: (tag: string) => void;
   availableTags?: string[];
-  onExport?: () => void;
-  onImport?: () => void;
+  onDataChange?: () => void;
 }
 
 export function DashboardLayout({
@@ -64,8 +64,7 @@ export function DashboardLayout({
   onTagSelect,
   onTagRemove,
   availableTags = [],
-  onExport,
-  onImport,
+  onDataChange,
 }: DashboardLayoutProps) {
   const pathname = usePathname();
   const router = useRouter();
@@ -100,26 +99,7 @@ export function DashboardLayout({
             
             {/* Import/Export Actions */}
             <div className="mt-auto p-4 border-t border-border">
-              <div className="space-y-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={onExport}
-                  className="w-full justify-start"
-                >
-                  <Download className="h-4 w-4 mr-2" />
-                  Export Data
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={onImport}
-                  className="w-full justify-start"
-                >
-                  <Upload className="h-4 w-4 mr-2" />
-                  Import Data
-                </Button>
-              </div>
+              <ImportExportComponent onDataChange={onDataChange} />
             </div>
           </SidebarContent>
         </Sidebar>
