@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { ExperienceListSkeleton } from "@/components/ui/loading-skeletons";
 import { Plus, LayoutGrid, List } from "lucide-react";
 import { Experience } from "@/types";
 import dataManager from "@/lib/data-manager";
@@ -21,6 +22,7 @@ export default function ExperiencesPage() {
   const [viewMode, setViewMode] = useState<'cards' | 'table'>('cards');
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingExperience, setEditingExperience] = useState<Experience | undefined>();
+  const [isLoading, setIsLoading] = useState(true);
 
   // Load data on mount
   useEffect(() => {
@@ -32,23 +34,31 @@ export default function ExperiencesPage() {
     let filtered = experiences;
     
     if (searchQuery) {
-      filtered = dataManager.searchItems<Experience>('experiences', searchQuery);
+      filtered = dataManager.searchItemsSync<Experience>('experiences', searchQuery);
     }
     
     if (selectedTags.length > 0) {
-      filtered = filtered.filter(exp => 
-        selectedTags.some(tag => exp.tags.includes(tag))
+      filtered = filtered.filter(experience => 
+        selectedTags.some(tag => experience.tags.includes(tag))
       );
     }
     
     setFilteredExperiences(filtered);
   }, [experiences, searchQuery, selectedTags]);
 
-  const loadExperiences = () => {
-    const data = dataManager.getAllItems<Experience>('experiences');
-    setExperiences(data);
-    setFilteredExperiences(data);
-    setAvailableTags(dataManager.getAllTags('experiences'));
+  const loadExperiences = async () => {
+    setIsLoading(true);
+    try {
+      const data = await dataManager.getAllItems<Experience>('experiences');
+      setExperiences(data);
+      setFilteredExperiences(data);
+      const tags = await dataManager.getAllTags('experiences');
+      setAvailableTags(tags);
+    } catch (error) {
+      console.error('Failed to load experiences:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleAdd = () => {
@@ -61,18 +71,18 @@ export default function ExperiencesPage() {
     setIsFormOpen(true);
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this experience?')) {
-      dataManager.deleteItem('experiences', id);
+      await dataManager.deleteItem('experiences', id);
       loadExperiences();
     }
   };
 
-  const handleFormSubmit = (data: Omit<Experience, 'id' | 'createdAt' | 'updatedAt'>) => {
+  const handleFormSubmit = async (data: Omit<Experience, 'id' | 'createdAt' | 'updatedAt'>) => {
     if (editingExperience) {
-      dataManager.updateItem('experiences', editingExperience.id, data);
+      await dataManager.updateItem('experiences', editingExperience.id, data);
     } else {
-      dataManager.createItem('experiences', data);
+      await dataManager.createItem('experiences', data);
     }
     loadExperiences();
     setIsFormOpen(false);
@@ -92,8 +102,8 @@ export default function ExperiencesPage() {
     setSelectedTags(prev => prev.filter(t => t !== tag));
   };
 
-  const handleExport = () => {
-    const data = dataManager.exportData();
+  const handleExport = async () => {
+    const data = await dataManager.exportData();
     const blob = new Blob([data], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -109,14 +119,15 @@ export default function ExperiencesPage() {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = '.json';
-    input.onchange = (e) => {
+    input.onchange = async (e) => {
       const file = (e.target as HTMLInputElement).files?.[0];
       if (file) {
         const reader = new FileReader();
-        reader.onload = (e) => {
+        reader.onload = async (e) => {
           try {
             const data = e.target?.result as string;
-            if (dataManager.importData(data)) {
+            const success = await dataManager.importData(data);
+            if (success) {
               alert('Data imported successfully!');
               loadExperiences();
             } else {
@@ -183,12 +194,16 @@ export default function ExperiencesPage() {
         </div>
 
         {/* Experience List */}
-        <ExperienceList
-          experiences={filteredExperiences}
-          viewMode={viewMode}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-        />
+        {isLoading ? (
+          <ExperienceListSkeleton viewMode={viewMode} />
+        ) : (
+          <ExperienceList
+            experiences={filteredExperiences}
+            viewMode={viewMode}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
+        )}
 
         {/* Experience Form Modal */}
         <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>

@@ -1,26 +1,9 @@
 // Predefined values for dropdowns and selects
 
 export const LOCATIONS = [
+  "Tunisia/Remote",
+  "Tunisia",
   "Remote",
-  "New York, NY",
-  "San Francisco, CA", 
-  "Los Angeles, CA",
-  "Seattle, WA",
-  "Austin, TX",
-  "Boston, MA",
-  "Chicago, IL",
-  "Denver, CO",
-  "Atlanta, GA",
-  "Miami, FL",
-  "Portland, OR",
-  "Washington, DC",
-  "London, UK",
-  "Berlin, Germany",
-  "Amsterdam, Netherlands",
-  "Toronto, Canada",
-  "Sydney, Australia",
-  "Tokyo, Japan",
-  "Singapore",
 ] as const;
 
 export const EXPERIENCE_TYPES = [

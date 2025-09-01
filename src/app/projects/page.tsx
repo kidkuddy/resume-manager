@@ -6,7 +6,10 @@ import { ProjectList } from "@/components/data-display/project-list";
 import { ProjectForm } from "@/components/forms/project-form";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { ExperienceListSkeleton } from "@/components/ui/loading-skeletons";
+import { ProjectListSkeleton } from "@/components/ui/project-skeletons";
 import { Plus, LayoutGrid, List } from "lucide-react";
 import { Project } from "@/types";
 import dataManager from "@/lib/data-manager";
@@ -20,6 +23,7 @@ export default function ProjectsPage() {
   const [viewMode, setViewMode] = useState<'cards' | 'table'>('cards');
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | undefined>();
+  const [isLoading, setIsLoading] = useState(true);
 
   // Load data on mount
   useEffect(() => {
@@ -31,7 +35,7 @@ export default function ProjectsPage() {
     let filtered = projects;
     
     if (searchQuery) {
-      filtered = dataManager.searchItems<Project>('projects', searchQuery);
+      filtered = dataManager.searchItemsSync<Project>('projects', searchQuery);
     }
     
     if (selectedTags.length > 0) {
@@ -43,11 +47,19 @@ export default function ProjectsPage() {
     setFilteredProjects(filtered);
   }, [projects, searchQuery, selectedTags]);
 
-  const loadProjects = () => {
-    const data = dataManager.getAllItems<Project>('projects');
-    setProjects(data);
-    setFilteredProjects(data);
-    setAvailableTags(dataManager.getAllTags('projects'));
+  const loadProjects = async () => {
+    setIsLoading(true);
+    try {
+      const data = await dataManager.getAllItems<Project>('projects');
+      setProjects(data);
+      setFilteredProjects(data);
+      const tags = await dataManager.getAllTags('projects');
+      setAvailableTags(tags);
+    } catch (error) {
+      console.error('Failed to load projects:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleAdd = () => {
@@ -60,18 +72,18 @@ export default function ProjectsPage() {
     setIsFormOpen(true);
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this project?')) {
-      dataManager.deleteItem('projects', id);
+      await dataManager.deleteItem('projects', id);
       loadProjects();
     }
   };
 
-  const handleFormSubmit = (data: Omit<Project, 'id' | 'createdAt' | 'updatedAt'>) => {
+  const handleFormSubmit = async (data: Omit<Project, 'id' | 'createdAt' | 'updatedAt'>) => {
     if (editingProject) {
-      dataManager.updateItem('projects', editingProject.id, data);
+      await dataManager.updateItem('projects', editingProject.id, data);
     } else {
-      dataManager.createItem('projects', data);
+      await dataManager.createItem('projects', data);
     }
     loadProjects();
     setIsFormOpen(false);
@@ -91,8 +103,8 @@ export default function ProjectsPage() {
     setSelectedTags(prev => prev.filter(t => t !== tag));
   };
 
-  const handleExport = () => {
-    const data = dataManager.exportData();
+  const handleExport = async () => {
+    const data = await dataManager.exportData();
     const blob = new Blob([data], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -108,14 +120,15 @@ export default function ProjectsPage() {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = '.json';
-    input.onchange = (e) => {
+    input.onchange = async (e) => {
       const file = (e.target as HTMLInputElement).files?.[0];
       if (file) {
         const reader = new FileReader();
-        reader.onload = (e) => {
+        reader.onload = async (e) => {
           try {
             const data = e.target?.result as string;
-            if (dataManager.importData(data)) {
+            const success = await dataManager.importData(data);
+            if (success) {
               alert('Data imported successfully!');
               loadProjects();
             } else {
@@ -182,12 +195,16 @@ export default function ProjectsPage() {
         </div>
 
         {/* Projects List */}
-        <ProjectList
-          projects={filteredProjects}
-          viewMode={viewMode}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-        />
+        {isLoading ? (
+          <ProjectListSkeleton viewMode={viewMode} />
+        ) : (
+          <ProjectList
+            projects={filteredProjects}
+            viewMode={viewMode}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
+        )}
 
         {/* Project Form Modal */}
         <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>

@@ -4,6 +4,7 @@ import { DashboardLayout } from "@/components/dashboard-layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { 
   FileText, 
   FolderOpen, 
@@ -81,22 +82,51 @@ export default function HomePage() {
     education: 0,
     templates: 0,
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Load stats from data manager
-    setStats({
-      experiences: dataManager.getAllItems('experiences').length,
-      projects: dataManager.getAllItems('projects').length,
-      certifications: dataManager.getAllItems('certifications').length,
-      activities: dataManager.getAllItems('activities').length,
-      skills: dataManager.getAllItems('skills').length,
-      education: dataManager.getAllItems('education').length,
-      templates: dataManager.getAllItems('templates').length,
-    });
+    loadStats();
   }, []);
 
-  const handleExport = () => {
-    const data = dataManager.exportData();
+  const loadStats = async () => {
+    setIsLoading(true);
+    try {
+      const [
+        experiences,
+        projects,
+        certifications,
+        activities,
+        skills,
+        education,
+        templates
+      ] = await Promise.all([
+        dataManager.getAllItems('experiences'),
+        dataManager.getAllItems('projects'),
+        dataManager.getAllItems('certifications'),
+        dataManager.getAllItems('activities'),
+        dataManager.getAllItems('skills'),
+        dataManager.getAllItems('education'),
+        dataManager.getAllItems('templates')
+      ]);
+
+      setStats({
+        experiences: experiences.length,
+        projects: projects.length,
+        certifications: certifications.length,
+        activities: activities.length,
+        skills: skills.length,
+        education: education.length,
+        templates: templates.length,
+      });
+    } catch (error) {
+      console.error('Failed to load stats:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleExport = async () => {
+    const data = await dataManager.exportData();
     const blob = new Blob([data], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -112,16 +142,17 @@ export default function HomePage() {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = '.json';
-    input.onchange = (e) => {
+    input.onchange = async (e) => {
       const file = (e.target as HTMLInputElement).files?.[0];
       if (file) {
         const reader = new FileReader();
-        reader.onload = (e) => {
+        reader.onload = async (e) => {
           try {
             const data = e.target?.result as string;
-            if (dataManager.importData(data)) {
+            const success = await dataManager.importData(data);
+            if (success) {
               alert('Data imported successfully!');
-              window.location.reload(); // Refresh to show new data
+              loadStats();
             } else {
               alert('Failed to import data. Please check the file format.');
             }
@@ -152,33 +183,50 @@ export default function HomePage() {
 
         {/* Quick Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {sections.map((section) => {
-            const count = stats[section.path.slice(1) as keyof typeof stats];
-            const Icon = section.icon;
-            
-            return (
-              <Card 
-                key={section.path} 
-                className="cursor-pointer transition-colors hover:bg-accent/50"
-                onClick={() => router.push(section.path)}
-              >
+          {isLoading ? (
+            // Loading skeletons
+            [...Array(7)].map((_, i) => (
+              <Card key={i}>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    {section.title}
-                  </CardTitle>
-                  <div className={`p-2 rounded-md ${section.color}/10`}>
-                    <Icon className={`h-4 w-4 text-${section.color.split('-')[1]}-500`} />
-                  </div>
+                  <Skeleton className="h-4 w-20" />
+                  <Skeleton className="h-8 w-8 rounded-md" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{count}</div>
-                  <p className="text-xs text-muted-foreground">
-                    {count === 1 ? 'item' : 'items'}
-                  </p>
+                  <Skeleton className="h-8 w-12 mb-1" />
+                  <Skeleton className="h-3 w-10" />
                 </CardContent>
               </Card>
-            );
-          })}
+            ))
+          ) : (
+            // Actual stats cards
+            sections.map((section) => {
+              const count = stats[section.path.slice(1) as keyof typeof stats];
+              const Icon = section.icon;
+              
+              return (
+                <Card 
+                  key={section.path} 
+                  className="cursor-pointer transition-colors hover:bg-accent/50"
+                  onClick={() => router.push(section.path)}
+                >
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">
+                      {section.title}
+                    </CardTitle>
+                    <div className={`p-2 rounded-md ${section.color}/10`}>
+                      <Icon className={`h-4 w-4 text-${section.color.split('-')[1]}-500`} />
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">{count}</div>
+                    <p className="text-xs text-muted-foreground">
+                      {count === 1 ? 'item' : 'items'}
+                    </p>
+                  </CardContent>
+                </Card>
+              );
+            })
+          )}
         </div>
 
         {/* Quick Actions */}

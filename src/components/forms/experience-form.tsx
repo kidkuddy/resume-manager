@@ -68,11 +68,12 @@ export function ExperienceForm({ experience, onSubmit, onCancel }: ExperienceFor
     }
   };
 
-  const removeFromArray = (field: keyof typeof formData, index: number) => {
+  const removeFromArray = (field: keyof typeof formData, value: string) => {
     const currentArray = formData[field] as string[];
+    const newArray = currentArray.filter(item => item !== value);
     setFormData(prev => ({
       ...prev,
-      [field]: currentArray.filter((_, i) => i !== index)
+      [field]: newArray
     }));
   };
 
@@ -204,13 +205,20 @@ export function ExperienceForm({ experience, onSubmit, onCancel }: ExperienceFor
           </Button>
         </div>
         <div className="flex flex-wrap gap-2">
-          {formData.responsibilities.map((resp, index) => (
-            <Badge key={index} variant="secondary" className="flex items-center gap-1">
+          {formData.responsibilities.map((resp) => (
+            <Badge key={resp} variant="secondary" className="flex items-center gap-1">
               {resp}
-              <X
-                className="h-3 w-3 cursor-pointer"
-                onClick={() => removeFromArray('responsibilities', index)}
-              />
+              <button
+                type="button"
+                className="ml-1 p-0 border-0 bg-transparent cursor-pointer hover:text-red-500"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  removeFromArray('responsibilities', resp);
+                }}
+              >
+                <X className="h-3 w-3" />
+              </button>
             </Badge>
           ))}
         </div>
@@ -235,13 +243,20 @@ export function ExperienceForm({ experience, onSubmit, onCancel }: ExperienceFor
           </Button>
         </div>
         <div className="flex flex-wrap gap-2">
-          {formData.achievements.map((achievement, index) => (
-            <Badge key={index} variant="secondary" className="flex items-center gap-1">
+          {formData.achievements.map((achievement) => (
+            <Badge key={achievement} variant="secondary" className="flex items-center gap-1">
               {achievement}
-              <X
-                className="h-3 w-3 cursor-pointer"
-                onClick={() => removeFromArray('achievements', index)}
-              />
+              <button
+                type="button"
+                className="ml-1 p-0 border-0 bg-transparent cursor-pointer hover:text-red-500"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  removeFromArray('achievements', achievement);
+                }}
+              >
+                <X className="h-3 w-3" />
+              </button>
             </Badge>
           ))}
         </div>
@@ -283,13 +298,20 @@ export function ExperienceForm({ experience, onSubmit, onCancel }: ExperienceFor
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
-          {formData.technologies.map((tech, index) => (
-            <Badge key={index} variant="outline" className="flex items-center gap-1">
+          {formData.technologies.map((tech) => (
+            <Badge key={tech} variant="outline" className="flex items-center gap-1">
               {tech}
-              <X
-                className="h-3 w-3 cursor-pointer"
-                onClick={() => removeFromArray('technologies', index)}
-              />
+              <button
+                type="button"
+                className="ml-1 p-0 border-0 bg-transparent cursor-pointer hover:text-red-500"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  removeFromArray('technologies', tech);
+                }}
+              >
+                <X className="h-3 w-3" />
+              </button>
             </Badge>
           ))}
         </div>
@@ -314,13 +336,20 @@ export function ExperienceForm({ experience, onSubmit, onCancel }: ExperienceFor
           </Button>
         </div>
         <div className="flex flex-wrap gap-2">
-          {formData.tags.map((tag, index) => (
-            <Badge key={index} variant="default" className="flex items-center gap-1">
+          {formData.tags.map((tag) => (
+            <Badge key={tag} variant="default" className="flex items-center gap-1">
               {tag}
-              <X
-                className="h-3 w-3 cursor-pointer"
-                onClick={() => removeFromArray('tags', index)}
-              />
+              <button
+                type="button"
+                className="ml-1 p-0 border-0 bg-transparent cursor-pointer hover:text-red-500"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  removeFromArray('tags', tag);
+                }}
+              >
+                <X className="h-3 w-3" />
+              </button>
             </Badge>
           ))}
         </div>

@@ -1,6 +1,61 @@
 {
-  "experiences": [],
-  "projects": [],
+  "experiences": [
+    {
+      "title": "",
+      "description": "dsds",
+      "company": "Think-it",
+      "position": "Software Engineer",
+      "location": "Tunisia",
+      "type": "full-time",
+      "startDate": "Jan 2023",
+      "current": true,
+      "responsibilities": [
+        "ddd",
+        "deee"
+      ],
+      "achievements": [
+        "wwww",
+        "rrrr"
+      ],
+      "technologies": [
+        "Nuxt.js",
+        "Kotlin"
+      ],
+      "tags": [
+        "asdasd",
+        "sadasdas"
+      ],
+      "id": "mf1ay5xlfxt2hihrtnu",
+      "createdAt": "2025-09-01T15:56:41.481Z",
+      "updatedAt": "2025-09-01T16:29:25.151Z"
+    }
+  ],
+  "projects": [
+    {
+      "title": "kli8nt",
+      "description": "Cool stuff",
+      "type": "academic",
+      "status": "in-progress",
+      "year": 2025,
+      "url": "https://www.youtube.com/watch?v=99eNvrtz1ss",
+      "repository": "",
+      "technologies": [
+        "Angular",
+        "Swift",
+        "React"
+      ],
+      "highlights": [
+        "anybody home"
+      ],
+      "tags": [
+        "hehoo",
+        "www"
+      ],
+      "id": "mf1awcv7sw45lvf5hn",
+      "createdAt": "2025-09-01T15:55:17.155Z",
+      "updatedAt": "2025-09-01T16:29:04.335Z"
+    }
+  ],
   "certifications": [],
   "activities": [],
   "skills": [],
