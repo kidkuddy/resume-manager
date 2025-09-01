@@ -1,4 +1,4 @@
-import { ResumeData, ItemType, AllItems, Education, Skill, Activity } from '@/types';
+import { ResumeData, ItemType, AllItems, Education, Skill, Activity, Profile } from '@/types';
 
 // Updated DataManager to use filesystem via API routes
 class DataManager {
@@ -7,6 +7,7 @@ class DataManager {
   
   constructor() {
     this.data = {
+      profile: undefined,
       experiences: [],
       projects: [],
       certifications: [],
@@ -172,6 +173,58 @@ class DataManager {
     });
 
     return Array.from(tagSet).sort();
+  }
+
+  // Profile management
+  async getProfile(): Promise<Profile | undefined> {
+    await this.initializeData();
+    return this.data.profile;
+  }
+
+  async createProfile(profileData: Omit<Profile, 'id' | 'createdAt' | 'updatedAt'>): Promise<Profile> {
+    await this.initializeData();
+    
+    const now = new Date().toISOString();
+    const profile: Profile = {
+      ...profileData,
+      id: this.generateId(),
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    this.data.profile = profile;
+    await this.saveData();
+    return profile;
+  }
+
+  async updateProfile(updates: Partial<Omit<Profile, 'id' | 'createdAt'>>): Promise<Profile | undefined> {
+    await this.initializeData();
+    
+    if (!this.data.profile) {
+      return undefined;
+    }
+
+    const updatedProfile: Profile = {
+      ...this.data.profile,
+      ...updates,
+      updatedAt: new Date().toISOString(),
+    };
+
+    this.data.profile = updatedProfile;
+    await this.saveData();
+    return updatedProfile;
+  }
+
+  async deleteProfile(): Promise<boolean> {
+    await this.initializeData();
+    
+    if (!this.data.profile) {
+      return false;
+    }
+
+    this.data.profile = undefined;
+    await this.saveData();
+    return true;
   }
 
   // Export/Import functionality

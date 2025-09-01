@@ -82,7 +82,30 @@ export interface LaTeXTemplate {
   updatedAt: string;
 }
 
+export interface Profile {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone?: string;
+  location?: string;
+  website?: string;
+  linkedin?: string;
+  github?: string;
+  twitter?: string;
+  portfolio?: string;
+  professionalSummary: string;
+  profilePhoto?: string; // Base64 or URL
+  jobTitle?: string;
+  yearsOfExperience?: number;
+  preferredIndustries: string[];
+  roles: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface ResumeData {
+  profile?: Profile;
   experiences: Experience[];
   projects: Project[];
   certifications: Certification[];
