@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "resume-manager": {
+      "command": "node",
+      "args": ["/Users/niemand/Desktop/github/resume/mcp-server.js"],
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  }
+}
