@@ -1,5 +1,4 @@
 import { NextRequest } from 'next/server';
-import dataManager from '@/lib/data-manager';
 import { Experience } from '@/types';
 
 // Model Context Protocol Types

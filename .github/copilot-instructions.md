@@ -121,7 +121,6 @@ A personal Next.js web app for managing resume components with dark theme, minim
 ### Claude Desktop Integration
 - ✅ MCP configuration file (`mcp-config.json`)
 - ✅ Complete setup documentation (`MCP-README.md`)
-- ✅ Test script for validation (`test-mcp.js`)
 - ✅ End-to-end testing completed successfully
 
 ### AI-Assisted Resume Generation Workflow

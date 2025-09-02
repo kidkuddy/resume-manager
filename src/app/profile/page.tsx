@@ -94,7 +94,8 @@ export default function ProfilePage() {
       setIsEditing(false);
     } catch (error) {
       console.error('Failed to save profile:', error);
-      // TODO: Show error message to user
+      // Show error message to user
+      alert('Failed to save profile. Please try again.');
     } finally {
       setIsSaving(false);
     }
